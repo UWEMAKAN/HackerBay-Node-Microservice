@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run build && nodemon dist/app.js",
-    "serve": "npm run build && node dist/app.js",
-    "test": "mocha --reporter progress --require @babel/register \"src/**/*.test.js\"",
+    "serve": "nodemon node_modules/.bin/babel-node src/app.js",
+    "test": "npm run build && mocha --reporter progress --require @babel/register \"src/**/*.test.js\"",
     "lint": "esw src --color",
     "lint:watch": "npm run lint -- --watch",
     "prebuild": "rimraf ./dist && mkdir dist",
@@ -42,9 +42,12 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "@babel/node": "^7.8.7",
+    "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.2"
   },
   "nodemonConfig": {
