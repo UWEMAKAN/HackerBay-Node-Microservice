@@ -5,12 +5,12 @@ import jwtSecret from '../config/jwtConfig';
 const authentication = () => {
   const createToken = (user) => {
     const token = jwt.sign({ username: user.username }, jwtSecret);
-    return { success: true, token };
+    return { token };
   };
 
   const verifyToken = (token) => {
-    const decoded = jwt.verify(token, jwtSecret);
-    return { success: true, data: decoded };
+    const data = jwt.verify(token, jwtSecret);
+    return { data };
   };
 
   return {

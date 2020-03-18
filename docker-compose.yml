@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  api:
+    container_name: service_jsonpatch_thumbnail
+    build: ./
+    working_dir: /app
+    command: /bin/bash
+    ports:
+      - "4500:4500"
+    volumes:
+      - ./:/usr/src/api

@@ -47,6 +47,8 @@
     "chalk": "^3.0.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "fast-json-patch": "^3.0.0-1",
+    "image-thumbnail": "^1.0.7",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.2"
   },
