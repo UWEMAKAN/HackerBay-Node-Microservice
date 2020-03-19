@@ -1,5 +1,6 @@
 import chai from 'chai';
 import authentication from './jwtMiddleware';
+
 const expect = chai.expect;
 
 const { createToken, verifyToken } = authentication();

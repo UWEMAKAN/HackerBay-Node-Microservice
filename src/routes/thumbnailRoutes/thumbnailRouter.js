@@ -4,7 +4,14 @@ const { verify, createThumbnail } = controller();
 
 const router = (app) => {
   app.post('/createthumbnail', verify, (req, res) => {
-    createThumbnail(req, res);
+    const { uri, responseType } = req.body;
+    createThumbnail(uri, responseType)
+      .then((thumbnail) => {
+        return res.json({ thumbnail });
+      })
+      .catch((err) => {
+        return res.status(500);
+      });
   });
 };
 

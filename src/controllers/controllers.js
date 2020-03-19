@@ -4,10 +4,14 @@ import authentication from '../middlewares/jwtMiddleware';
 
 const { createToken, verifyToken } = authentication();
 const controller = () => {
-  const authenticate = (user) => {
+  const findUser = (user) => {
     const username = /.+/;
     const password = /.+/;
-    const isUser = username.test(user.username) && password.test(user.password);
+    return username.test(user.username) && password.test(user.password);
+  };
+
+  const authenticate = (user) => {
+    const isUser = findUser(user)
     return isUser ? createToken(user.username) : null;
   };
 
@@ -23,20 +27,21 @@ const controller = () => {
 
   const patchJson = (document, patch) => jsonpatch.applyPatch(document, patch).newDocument;
 
-  const createThumbnail = (req, res) => {
-    const { uri } = req.body;
-    const options = { width: 50, height: 50, responseType: 'base64' };
-    (async function getImageThumbnail() {
+  const createThumbnail = (uri, responseType) => {
+    async function getImageThumbnail(){
+      const options = { width: 50, height: 50, responseType };
       try {
-        const thumbnail = await imageThumbnail({ uri }, options);
-        return res.json({ thumbnail });
+        return await imageThumbnail({ uri }, options);
       } catch (err) {
-        return res.status(500);
+        return Promise.reject(Error('resource not found'));
       }
-    }());
+    };
+
+    return getImageThumbnail();
   };
 
   return {
+    findUser,
     authenticate,
     verify,
     patchJson,
