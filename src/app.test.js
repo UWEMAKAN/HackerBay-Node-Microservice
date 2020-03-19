@@ -1,13 +1,14 @@
-// import express from 'express';
 import http from 'http';
-import assert from 'assert';
+import chai from 'chai';
+
+const expect = chai.expect;
 
 import server from '../dist/app';
 
-describe('Example Node Server', () => {
+describe('Server Ok status', () => {
   it('should return 200', (done) => {
     http.get('http://127.0.0.1:3000', (res) => {
-      assert.equal(200, res.statusCode);
+      expect(res.statusCode).to.be.equal(200);
       server.close();
       done();
     });

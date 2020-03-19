@@ -8,7 +8,7 @@ const controller = () => {
     const username = /.+/;
     const password = /.+/;
     const isUser = username.test(user.username) && password.test(user.password);
-    return isUser ? createToken(user) : null;
+    return isUser ? createToken(user.username) : null;
   };
 
   const verify = (req, res, next) => {

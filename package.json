@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && nodemon dist/app.js",
     "serve": "nodemon node_modules/.bin/babel-node src/app.js",
-    "test": "npm run build && mocha --reporter progress --require @babel/register \"src/**/*.test.js\"",
+    "test": "mocha --watch --reporter spec --require @babel/register \"src/**/*.test.js\"",
     "lint": "esw src --color",
     "lint:watch": "npm run lint -- --watch",
     "prebuild": "rimraf ./dist && mkdir dist",
@@ -39,7 +39,8 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-watch": "^6.0.1",
     "mocha": "^7.1.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "sinon": "^9.0.1"
   },
   "dependencies": {
     "@babel/node": "^7.8.7",

@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import jwtSecret from '../config/jwtConfig';
 
 const authentication = () => {
-  const createToken = (user) => {
-    const token = jwt.sign({ username: user.username }, jwtSecret);
+  const createToken = (username) => {
+    const token = jwt.sign({ username }, jwtSecret);
     return { token };
   };
 
