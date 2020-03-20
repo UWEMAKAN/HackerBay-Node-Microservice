@@ -3,6 +3,7 @@ import imageThumbnail from 'image-thumbnail';
 import authentication from '../middlewares/jwtMiddleware';
 
 const { createToken, verifyToken } = authentication();
+
 const controller = () => {
   const findUser = (user) => {
     const username = /.+/;
@@ -16,7 +17,10 @@ const controller = () => {
   };
 
   const verify = (req, res, next) => {
+    // console.log("req", req);
+    console.log("req.headers", req.headers);
     const { authorization } = req.headers;
+    console.log('authorization', authorization);
     const token = authorization.split(' ')[1];
     const data = verifyToken(token);
     if (!data) {
@@ -25,7 +29,17 @@ const controller = () => {
     next();
   };
 
-  const patchJson = (document, patch) => jsonpatch.applyPatch(document, patch).newDocument;
+  const validatePatch = (patch, document) => {
+    return jsonpatch.validate(patch, document);
+  };
+
+  const patchJson = (document, patch) => {
+    const isInValid = validatePatch(patch, document);
+    if (isInValid) {
+      return null;
+    }
+    return jsonpatch.applyPatch(document, patch).newDocument;
+  }
 
   const createThumbnail = (uri, responseType) => {
     async function getImageThumbnail(){
@@ -44,6 +58,7 @@ const controller = () => {
     findUser,
     authenticate,
     verify,
+    validatePatch,
     patchJson,
     createThumbnail
   };

@@ -2,8 +2,12 @@ FROM node:12.16.1
 
 WORKDIR /usr/src/api
 
-COPY ./ ./
+COPY package*.json ./
 
 RUN npm install
 
-CMD ["/bin/bash"]
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "node dist/app.js" ]

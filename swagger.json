@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Node Microservice API",
+    "description": "Create thumbnails and patch json documents"
+  },
+  "host": "localhost:4500",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "description": "login and receive token for authenticating subsequent requests",
+        "parameters": [
+          {
+            "username": "username",
+            "in": "body",
+            "description": "username and password"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "token": "authentication token",
+          "status": "200"
+        }
+      }
+    },
+    "/createthumbnail": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Create thumbnail by providing url and format i.e. base64 or buffer",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "headers",
+            "description": "token for authenticating the request",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "url": "url",
+            "in": "body",
+            "description": "the url of the image to create thumbnail"
+          },
+          {
+            "responseType": "base64 or buffer",
+            "in": "body",
+            "description": "the encoding format of the thumbnail to be created"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "thumbnail": "base64 string or buffer",
+          "status": "200"
+        }
+      }
+    },
+    "/jsonpatch": {
+      "patch": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "patch a json document by providing the document and the patch",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "headers",
+            "description": "token for authenticating the request",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "document": "json document",
+            "in": "body",
+            "description": "the document you want to patch"
+          },
+          {
+            "patch": "json patch operations",
+            "in": "body",
+            "description": "the patch operations you want to perform"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "patchedDocument": "json document",
+          "status": "200"
+        }
+      }
+    }
+  }
+}
